@@ -39,8 +39,8 @@ body {
 
 /* Navbar */
 .navbar {
-  background-color: #ffffff;
-  border-bottom: 1px solid var(--border);
+  background-color: #2843bd;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   position: sticky;
   top: 0;
   z-index: 40;
@@ -62,7 +62,7 @@ body {
   gap: 0.5rem;
   font-weight: 700;
   font-size: 1.25rem;
-  color: var(--primary);
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -75,7 +75,7 @@ body {
 
 .nav-links a {
   text-decoration: none;
-  color: var(--secondary);
+  color: rgba(255, 255, 255, 0.85);
   font-weight: 500;
   padding: 0.4rem 0.75rem;
   border-radius: var(--radius);
@@ -84,14 +84,32 @@ body {
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: var(--primary);
-  background-color: var(--primary-light);
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .nav-auth {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.navbar .nav-auth span {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar .nav-auth strong {
+  color: #ffffff;
+}
+
+.navbar .btn-outline {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar .btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Container */
