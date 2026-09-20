@@ -447,6 +447,24 @@ body {
   justify-content: space-between;
 }
 
+.danger-banner {
+  display: none;
+  padding: 0.85rem 1.25rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--danger-bg);
+  border: 1px solid #ef8686;
+  color: #801515;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.danger-banner.show {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 /* Detail list in modal */
 .details-list {
   display: grid;

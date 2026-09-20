@@ -38,7 +38,7 @@
     </div>
 
     <!-- Cancel Notification Banner -->
-    <div id="cancelNotificationBanner" class="success-banner" style="background-color: var(--danger-bg); border-color: #fca5a5; color: var(--danger);">
+    <div id="cancelNotificationBanner" class="success-banner" border-color: #fca5a5; color: var(--danger);">
       <div style="display: flex; align-items: center; gap: 0.5rem;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"></circle>
@@ -262,8 +262,9 @@
           <div class="detail-value" id="cancelExamName">-</div>
         </div>
         <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem;">
-          This action cannot be undone and will remove the exam from the schedule.
+          Type in the name of the exam below to proceed with the cancellation.
         </p>
+        <input type="text" id="cancelExamTextBox" class="form-control" required>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" onclick="closeModal('cancelExamModal')">Keep Exam</button>
@@ -284,6 +285,7 @@
       pendingCancelRow = button.closest('tr');
       const examName = pendingCancelRow.querySelector('td:first-child strong');
       document.getElementById('cancelExamName').textContent = examName ? examName.textContent : 'this exam';
+      document.getElementById('cancelExamTextBox').placeholder = 'Exam name';
       openModal('cancelExamModal');
     }
 
@@ -292,24 +294,39 @@
 
       const examName = pendingCancelRow.querySelector('td:first-child strong');
       const name = examName ? examName.textContent : 'The exam';
+      const textBoxContent = document.getElementById('cancelExamTextBox').value.trim();
 
-      pendingCancelRow.remove();
-      pendingCancelRow = null;
       closeModal('cancelExamModal');
 
-      // Update count badge
-      const tableBody = document.getElementById('examTableBody');
-      const rowCount = tableBody.getElementsByTagName('tr').length;
-      document.getElementById('examCountBadge').textContent = rowCount + ' exam' + (rowCount !== 1 ? 's' : '') + ' scheduled';
+      if (textBoxContent === name) {
+        pendingCancelRow.remove();
+        pendingCancelRow = null;
 
-      // Show cancel notification
-      document.getElementById('cancelNotificationText').textContent =
-        '"' + name + '" has been cancelled and removed from the schedule.';
-      const banner = document.getElementById('cancelNotificationBanner');
-      // Hide plan success banner if visible
-      document.getElementById('planSuccessBanner').classList.remove('show');
-      banner.classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Update count badge
+        const tableBody = document.getElementById('examTableBody');
+        const rowCount = tableBody.getElementsByTagName('tr').length;
+        document.getElementById('examCountBadge').textContent = rowCount + ' exam' + (rowCount !== 1 ? 's' : '') + ' scheduled';
+
+        // Show cancel notification
+        document.getElementById('cancelNotificationText').textContent =
+          '"' + name + '" has been cancelled and removed from the schedule.';
+        const banner = document.getElementById('cancelNotificationBanner');
+        banner.className = "success-banner";
+        // Hide plan success banner if visible
+        document.getElementById('planSuccessBanner').classList.remove('show');
+        banner.classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // Show cancel notification
+        document.getElementById('cancelNotificationText').textContent =
+          '"' + name + '" has not been deleted due to a confirmation failure.';
+        const banner = document.getElementById('cancelNotificationBanner');
+        banner.className = "danger-banner";
+        // Hide plan success banner if visible
+        document.getElementById('planSuccessBanner').classList.remove('show');
+        banner.classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
 
     function dismissCancelBanner() {
