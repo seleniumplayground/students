@@ -284,6 +284,17 @@ body {
   border-color: #cbd5e1;
 }
 
+.btn-danger {
+  background-color: var(--danger-bg);
+  color: var(--danger);
+  border-color: #fca5a5;
+}
+
+.btn-danger:hover {
+  background-color: #fecaca;
+  border-color: var(--danger);
+}
+
 /* Modals */
 .modal-backdrop {
   position: fixed;

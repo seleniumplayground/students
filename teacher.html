@@ -37,6 +37,19 @@
       <button type="button" class="modal-close" style="font-size: 1.2rem;" onclick="dismissSuccessBanner()">&times;</button>
     </div>
 
+    <!-- Cancel Notification Banner -->
+    <div id="cancelNotificationBanner" class="success-banner" style="background-color: var(--danger-bg); border-color: #fca5a5; color: var(--danger);">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="cancelNotificationText">Exam has been cancelled.</span>
+      </div>
+      <button type="button" class="modal-close" style="font-size: 1.2rem; color: var(--danger);" onclick="dismissCancelBanner()">&times;</button>
+    </div>
+
     <div class="page-header">
       <div>
         <h1 class="page-title">Welcome, teacher</h1>
@@ -71,6 +84,7 @@
               <th>Date</th>
               <th>Time</th>
               <th>Notes</th>
+              <th style="text-align: right;">Actions</th>
             </tr>
           </thead>
           <tbody id="examTableBody">
@@ -80,6 +94,9 @@
               <td>2026-05-15</td>
               <td>10:00 AM</td>
               <td>Room B528 via Campus Virtual</td>
+              <td style="text-align: right;">
+                <button class="btn btn-danger btn-sm" onclick="promptCancelExam(this)">Cancel</button>
+              </td>
             </tr>
             <tr>
               <td><strong>Lab Test</strong></td>
@@ -87,6 +104,9 @@
               <td>2026-05-22</td>
               <td>02:00 PM</td>
               <td>Room B529</td>
+              <td style="text-align: right;">
+                <button class="btn btn-danger btn-sm" onclick="promptCancelExam(this)">Cancel</button>
+              </td>
             </tr>
             <tr>
               <td><strong>Final Exam</strong></td>
@@ -94,6 +114,9 @@
               <td>2026-06-10</td>
               <td>09:00 AM</td>
               <td>Room A101, written exam</td>
+              <td style="text-align: right;">
+                <button class="btn btn-danger btn-sm" onclick="promptCancelExam(this)">Cancel</button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -223,12 +246,76 @@
     </div>
   </div>
 
+  <!-- Cancel Confirmation Modal -->
+  <div class="modal-backdrop" id="cancelExamModal">
+    <div class="modal" style="max-width: 460px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Cancel Exam</h3>
+        <button type="button" class="modal-close" onclick="closeModal('cancelExamModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.75rem;">
+          Are you sure you want to cancel the following exam?
+        </p>
+        <div class="detail-item full-width" style="margin-bottom: 0;">
+          <div class="detail-label">Exam</div>
+          <div class="detail-value" id="cancelExamName">-</div>
+        </div>
+        <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem;">
+          This action cannot be undone and will remove the exam from the schedule.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('cancelExamModal')">Keep Exam</button>
+        <button type="button" class="btn btn-danger" onclick="confirmCancelExam()">Yes, Cancel Exam</button>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>&copy; 2026 SVV Team</p>
   </footer>
 
   <script src="js/app.js"></script>
   <script>
+    let pendingCancelRow = null;
+
+    function promptCancelExam(button) {
+      pendingCancelRow = button.closest('tr');
+      const examName = pendingCancelRow.querySelector('td:first-child strong');
+      document.getElementById('cancelExamName').textContent = examName ? examName.textContent : 'this exam';
+      openModal('cancelExamModal');
+    }
+
+    function confirmCancelExam() {
+      if (!pendingCancelRow) return;
+
+      const examName = pendingCancelRow.querySelector('td:first-child strong');
+      const name = examName ? examName.textContent : 'The exam';
+
+      pendingCancelRow.remove();
+      pendingCancelRow = null;
+      closeModal('cancelExamModal');
+
+      // Update count badge
+      const tableBody = document.getElementById('examTableBody');
+      const rowCount = tableBody.getElementsByTagName('tr').length;
+      document.getElementById('examCountBadge').textContent = rowCount + ' exam' + (rowCount !== 1 ? 's' : '') + ' scheduled';
+
+      // Show cancel notification
+      document.getElementById('cancelNotificationText').textContent =
+        '"' + name + '" has been cancelled and removed from the schedule.';
+      const banner = document.getElementById('cancelNotificationBanner');
+      // Hide plan success banner if visible
+      document.getElementById('planSuccessBanner').classList.remove('show');
+      banner.classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function dismissCancelBanner() {
+      document.getElementById('cancelNotificationBanner').classList.remove('show');
+    }
+
     let currentStep = 1;
     const totalSteps = 3;
 
@@ -347,6 +434,7 @@
         <td>${escapeHTML(date)}</td>
         <td>${escapeHTML(time)}</td>
         <td>${escapeHTML(notes)}</td>
+        <td style="text-align: right;"><button class="btn btn-danger btn-sm" onclick="promptCancelExam(this)">Cancel</button></td>
       `;
       tableBody.insertBefore(row, tableBody.firstChild);
 
