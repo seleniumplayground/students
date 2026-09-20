@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students - Student Management</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+        <span>UniPortal</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="students.html" class="active">Students</a></li>
+        <li><a href="courses.html">Courses</a></li>
+      </ul>
+      <div class="nav-auth">
+        <button class="btn btn-outline btn-sm" onclick="openModal('loginModal')">Teacher Login</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Students Directory</h1>
+        <p class="page-subtitle">Manage and inspect registered students across all faculties</p>
+      </div>
+      <div class="search-wrapper">
+        <input type="text" id="studentSearch" class="search-input" placeholder="Search students by name..." autocomplete="off">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="table-responsive">
+        <table class="data-table" id="studentsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Enrollment Year</th>
+              <th>Faculty</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            <tr data-student='{"name": "Andrei Popescu", "enrollment": 2021, "faculty": "AC", "birth": 2002, "credits": 150, "email": "andrei.popescu@student.upt.ro", "gpa": 3.92}'>
+              <td><strong>Andrei Popescu</strong></td>
+              <td>2021</td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Elena Ionescu", "enrollment": 2022, "faculty": "ETC", "birth": 2003, "credits": 102, "email": "elena.ionescu@student.upt.ro", "gpa": 3.88}'>
+              <td><strong>Elena Ionescu</strong></td>
+              <td>2022</td>
+              <td><span class="badge badge-etc">ETC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Radu Radulescu", "enrollment": 2020, "faculty": "CT", "birth": 2001, "credits": 195, "email": "radu.radulescu@student.upt.ro", "gpa": 3.75}'>
+              <td><strong>Radu Radulescu</strong></td>
+              <td>2020</td>
+              <td><span class="badge badge-ct">CT</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Maria Dumitrescu", "enrollment": 2023, "faculty": "EE", "birth": 2004, "credits": 52, "email": "maria.dumitrescu@student.upt.ro", "gpa": 3.95}'>
+              <td><strong>Maria Dumitrescu</strong></td>
+              <td>2023</td>
+              <td><span class="badge badge-ee">EE</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Stefan Gheorghiu", "enrollment": 2021, "faculty": "ARH", "birth": 2002, "credits": 138, "email": "stefan.gheorghiu@student.upt.ro", "gpa": 3.68}'>
+              <td><strong>Stefan Gheorghiu</strong></td>
+              <td>2021</td>
+              <td><span class="badge badge-arh">ARH</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Ioana Constantinescu", "enrollment": 2022, "faculty": "CHEM", "birth": 2003, "credits": 94, "email": "ioana.constantinescu@student.upt.ro", "gpa": 3.82}'>
+              <td><strong>Ioana Constantinescu</strong></td>
+              <td>2022</td>
+              <td><span class="badge badge-chem">CHEM</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Vlad Munteanu", "enrollment": 2020, "faculty": "AC", "birth": 2000, "credits": 215, "email": "vlad.munteanu@student.upt.ro", "gpa": 3.60}'>
+              <td><strong>Vlad Munteanu</strong></td>
+              <td>2020</td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Cristian Diaconu", "enrollment": 2023, "faculty": "ETC", "birth": 2004, "credits": 46, "email": "cristian.diaconu@student.upt.ro", "gpa": 3.70}'>
+              <td><strong>Cristian Diaconu</strong></td>
+              <td>2023</td>
+              <td><span class="badge badge-etc">ETC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Andra Stoica", "enrollment": 2021, "faculty": "AC", "birth": 2002, "credits": 142, "email": "andra.stoica@student.upt.ro", "gpa": 3.84}'>
+              <td><strong>Andra Stoica</strong></td>
+              <td>2021</td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Alexandru Marin", "enrollment": 2022, "faculty": "CT", "birth": 2003, "credits": 90, "email": "alexandru.marin@student.upt.ro", "gpa": 3.55}'>
+              <td><strong>Alexandru Marin</strong></td>
+              <td>2022</td>
+              <td><span class="badge badge-ct">CT</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Raluca Vasilescu", "enrollment": 2021, "faculty": "ARH", "birth": 2002, "credits": 136, "email": "raluca.vasilescu@student.upt.ro", "gpa": 3.90}'>
+              <td><strong>Raluca Vasilescu</strong></td>
+              <td>2021</td>
+              <td><span class="badge badge-arh">ARH</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Mihai Dragomir", "enrollment": 2020, "faculty": "EE", "birth": 2001, "credits": 188, "email": "mihai.dragomir@student.upt.ro", "gpa": 3.62}'>
+              <td><strong>Mihai Dragomir</strong></td>
+              <td>2020</td>
+              <td><span class="badge badge-ee">EE</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Gabriel Nistor", "enrollment": 2023, "faculty": "CHEM", "birth": 2004, "credits": 50, "email": "gabriel.nistor@student.upt.ro", "gpa": 3.73}'>
+              <td><strong>Gabriel Nistor</strong></td>
+              <td>2023</td>
+              <td><span class="badge badge-chem">CHEM</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Cosmin Stan", "enrollment": 2022, "faculty": "AC", "birth": 2003, "credits": 105, "email": "cosmin.stan@student.upt.ro", "gpa": 3.81}'>
+              <td><strong>Cosmin Stan</strong></td>
+              <td>2022</td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Ana-Maria Florea", "enrollment": 2021, "faculty": "ETC", "birth": 2002, "credits": 140, "email": "anamaria.florea@student.upt.ro", "gpa": 3.96}'>
+              <td><strong>Ana-Maria Florea</strong></td>
+              <td>2021</td>
+              <td><span class="badge badge-etc">ETC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Bogdan Neagu", "enrollment": 2020, "faculty": "CT", "birth": 2001, "credits": 192, "email": "bogdan.neagu@student.upt.ro", "gpa": 3.48}'>
+              <td><strong>Bogdan Neagu</strong></td>
+              <td>2020</td>
+              <td><span class="badge badge-ct">CT</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Diana Dobre", "enrollment": 2023, "faculty": "EE", "birth": 2004, "credits": 45, "email": "diana.dobre@student.upt.ro", "gpa": 3.89}'>
+              <td><strong>Diana Dobre</strong></td>
+              <td>2023</td>
+              <td><span class="badge badge-ee">EE</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "George Iliescu", "enrollment": 2022, "faculty": "ARH", "birth": 2003, "credits": 92, "email": "george.iliescu@student.upt.ro", "gpa": 3.64}'>
+              <td><strong>George Iliescu</strong></td>
+              <td>2022</td>
+              <td><span class="badge badge-arh">ARH</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Simona Sandu", "enrollment": 2021, "faculty": "CHEM", "birth": 2002, "credits": 134, "email": "simona.sandu@student.upt.ro", "gpa": 3.79}'>
+              <td><strong>Simona Sandu</strong></td>
+              <td>2021</td>
+              <td><span class="badge badge-chem">CHEM</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Tudor Enache", "enrollment": 2020, "faculty": "AC", "birth": 2000, "credits": 210, "email": "tudor.enache@student.upt.ro", "gpa": 3.87}'>
+              <td><strong>Tudor Enache</strong></td>
+              <td>2020</td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Roxana Voinea", "enrollment": 2023, "faculty": "ETC", "birth": 2004, "credits": 48, "email": "roxana.voinea@student.upt.ro", "gpa": 3.91}'>
+              <td><strong>Roxana Voinea</strong></td>
+              <td>2023</td>
+              <td><span class="badge badge-etc">ETC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Ionut Barbu", "enrollment": 2022, "faculty": "CT", "birth": 2003, "credits": 96, "email": "ionut.barbu@student.upt.ro", "gpa": 3.52}'>
+              <td><strong>Ionut Barbu</strong></td>
+              <td>2022</td>
+              <td><span class="badge badge-ct">CT</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Madalina Oprea", "enrollment": 2021, "faculty": "EE", "birth": 2002, "credits": 144, "email": "madalina.oprea@student.upt.ro", "gpa": 3.83}'>
+              <td><strong>Madalina Oprea</strong></td>
+              <td>2021</td>
+              <td><span class="badge badge-ee">EE</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Florin Mocanu", "enrollment": 2020, "faculty": "ARH", "birth": 2001, "credits": 198, "email": "florin.mocanu@student.upt.ro", "gpa": 3.71}'>
+              <td><strong>Florin Mocanu</strong></td>
+              <td>2020</td>
+              <td><span class="badge badge-arh">ARH</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Alina Tudor", "enrollment": 2023, "faculty": "CHEM", "birth": 2004, "credits": 54, "email": "alina.tudor@student.upt.ro", "gpa": 3.94}'>
+              <td><strong>Alina Tudor</strong></td>
+              <td>2023</td>
+              <td><span class="badge badge-chem">CHEM</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Paul Ciornei", "enrollment": 2022, "faculty": "AC", "birth": 2003, "credits": 100, "email": "paul.ciornei@student.upt.ro", "gpa": 3.66}'>
+              <td><strong>Paul Ciornei</strong></td>
+              <td>2022</td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Bianca Stanciu", "enrollment": 2021, "faculty": "ETC", "birth": 2002, "credits": 146, "email": "bianca.stanciu@student.upt.ro", "gpa": 3.90}'>
+              <td><strong>Bianca Stanciu</strong></td>
+              <td>2021</td>
+              <td><span class="badge badge-etc">ETC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Dan Avram", "enrollment": 2020, "faculty": "CT", "birth": 2001, "credits": 205, "email": "dan.avram@student.upt.ro", "gpa": 3.58}'>
+              <td><strong>Dan Avram</strong></td>
+              <td>2020</td>
+              <td><span class="badge badge-ct">CT</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Carmen Lazar", "enrollment": 2023, "faculty": "EE", "birth": 2004, "credits": 49, "email": "carmen.lazar@student.upt.ro", "gpa": 3.77}'>
+              <td><strong>Carmen Lazar</strong></td>
+              <td>2023</td>
+              <td><span class="badge badge-ee">EE</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Victor Roman", "enrollment": 2022, "faculty": "ARH", "birth": 2003, "credits": 95, "email": "victor.roman@student.upt.ro", "gpa": 3.86}'>
+              <td><strong>Victor Roman</strong></td>
+              <td>2022</td>
+              <td><span class="badge badge-arh">ARH</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Cristina Petrescu", "enrollment": 2021, "faculty": "CHEM", "birth": 2002, "credits": 141, "email": "cristina.petrescu@student.upt.ro", "gpa": 3.89}'>
+              <td><strong>Cristina Petrescu</strong></td>
+              <td>2021</td>
+              <td><span class="badge badge-chem">CHEM</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-student='{"name": "Sorin Badea", "enrollment": 2020, "faculty": "AC", "birth": 2000, "credits": 218, "email": "sorin.badea@student.upt.ro", "gpa": 3.74}'>
+              <td><strong>Sorin Badea</strong></td>
+              <td>2020</td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showStudentDetails(this)">Details</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Student Details Modal -->
+  <div class="modal-backdrop" id="studentDetailsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalStudentName">Student Details</h3>
+        <button type="button" class="modal-close" onclick="closeModal('studentDetailsModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="details-list">
+          <div class="detail-item full-width">
+            <div class="detail-label">Full Name</div>
+            <div class="detail-value" id="detailFullName">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Faculty</div>
+            <div class="detail-value" id="detailFaculty">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Enrollment Year</div>
+            <div class="detail-value" id="detailEnrollmentYear">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Birth Year</div>
+            <div class="detail-value" id="detailBirthYear">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Total Credits</div>
+            <div class="detail-value" id="detailTotalCredits">-</div>
+          </div>
+          <div class="detail-item full-width">
+            <div class="detail-label">Email Address</div>
+            <div class="detail-value" id="detailEmail">-</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('studentDetailsModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal-backdrop" id="loginModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Teacher Login</h3>
+        <button type="button" class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+      </div>
+      <form onsubmit="handleLogin(event)">
+        <div class="modal-body">
+          <div id="loginError" class="error-message"></div>
+          <div class="form-group">
+            <label class="form-label" for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" class="form-control" placeholder="Enter username (teacher)" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="Enter password (password)" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('loginModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 SVV Team</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initTableSearch('studentSearch', 'studentsTableBody', 0);
+    });
+
+    function showStudentDetails(button) {
+      const row = button.closest('tr');
+      const dataStr = row.getAttribute('data-student');
+      if (!dataStr) return;
+      const data = JSON.parse(dataStr);
+
+      document.getElementById('modalStudentName').textContent = data.name;
+      document.getElementById('detailFullName').textContent = data.name;
+      document.getElementById('detailFaculty').textContent = data.faculty;
+      document.getElementById('detailEnrollmentYear').textContent = data.enrollment;
+      document.getElementById('detailBirthYear').textContent = data.birth;
+      document.getElementById('detailTotalCredits').textContent = data.credits + ' ECTS';
+      document.getElementById('detailEmail').textContent = data.email;
+
+      openModal('studentDetailsModal');
+    }
+  </script>
+</body>
+</html>

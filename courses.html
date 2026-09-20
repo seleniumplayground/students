@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses - Student Management</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+        <span>UniPortal</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="students.html">Students</a></li>
+        <li><a href="courses.html" class="active">Courses</a></li>
+      </ul>
+      <div class="nav-auth">
+        <button class="btn btn-outline btn-sm" onclick="openModal('loginModal')">Teacher Login</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Courses Directory</h1>
+        <p class="page-subtitle">View and explore all academic courses offered across faculties</p>
+      </div>
+      <div class="search-wrapper">
+        <input type="text" id="courseSearch" class="search-input" placeholder="Search courses by name..." autocomplete="off">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="table-responsive">
+        <table class="data-table" id="coursesTable">
+          <thead>
+            <tr>
+              <th>Course Name</th>
+              <th>Faculty</th>
+              <th>Enrolled Students</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="coursesTableBody">
+            <tr data-course='{"name": "Object-Oriented Programming", "faculty": "AC", "students": 140, "year": 2, "semester": "Semestrul 1", "credits": 6, "instructor": "Prof. Dr. Mihai Mocanu"}'>
+              <td><strong>Object-Oriented Programming</strong></td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td>140</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Structuri de Date și Algoritmi", "faculty": "AC", "students": 135, "year": 1, "semester": "Semestrul 2", "credits": 6, "instructor": "Conf. Dr. Radu Marinescu"}'>
+              <td><strong>Structuri de Date și Algoritmi</strong></td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td>135</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Computer Architecture", "faculty": "AC", "students": 125, "year": 2, "semester": "Semestrul 2", "credits": 5, "instructor": "Prof. Dr. Mircea Vladuțiu"}'>
+              <td><strong>Computer Architecture</strong></td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td>125</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Rețele de Calculatoare și Securitate", "faculty": "AC", "students": 115, "year": 3, "semester": "Semestrul 1", "credits": 5, "instructor": "Conf. Dr. Bogdan Groza"}'>
+              <td><strong>Rețele de Calculatoare și Securitate</strong></td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td>115</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Operating Systems", "faculty": "AC", "students": 130, "year": 2, "semester": "Semestrul 1", "credits": 5, "instructor": "Prof. Dr. Dan Pescariu"}'>
+              <td><strong>Operating Systems</strong></td>
+              <td><span class="badge badge-ac">AC</span></td>
+              <td>130</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Semnale și Sisteme", "faculty": "ETC", "students": 95, "year": 2, "semester": "Semestrul 2", "credits": 5, "instructor": "Prof. Dr. Florin Alexa"}'>
+              <td><strong>Semnale și Sisteme</strong></td>
+              <td><span class="badge badge-etc">ETC</span></td>
+              <td>95</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Digital Integrated Circuits", "faculty": "ETC", "students": 88, "year": 3, "semester": "Semestrul 1", "credits": 6, "instructor": "Conf. Dr. Aurel Gontean"}'>
+              <td><strong>Digital Integrated Circuits</strong></td>
+              <td><span class="badge badge-etc">ETC</span></td>
+              <td>88</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Comunicații Digitale și Mobile", "faculty": "ETC", "students": 82, "year": 3, "semester": "Semestrul 2", "credits": 5, "instructor": "Prof. Dr. Alexandru Isar"}'>
+              <td><strong>Comunicații Digitale și Mobile</strong></td>
+              <td><span class="badge badge-etc">ETC</span></td>
+              <td>82</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Digital Signal Processing", "faculty": "ETC", "students": 78, "year": 3, "semester": "Semestrul 1", "credits": 5, "instructor": "Prof. Dr. Corina Naforniță"}'>
+              <td><strong>Digital Signal Processing</strong></td>
+              <td><span class="badge badge-etc">ETC</span></td>
+              <td>78</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Baze de Date Relaționale", "faculty": "CT", "students": 120, "year": 2, "semester": "Semestrul 2", "credits": 6, "instructor": "Conf. Dr. Marius Crisan"}'>
+              <td><strong>Baze de Date Relaționale</strong></td>
+              <td><span class="badge badge-ct">CT</span></td>
+              <td>120</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Software Systems Engineering", "faculty": "CT", "students": 110, "year": 3, "semester": "Semestrul 1", "credits": 6, "instructor": "Prof. Dr. Doru Todinca"}'>
+              <td><strong>Software Systems Engineering</strong></td>
+              <td><span class="badge badge-ct">CT</span></td>
+              <td>110</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Sisteme Încorporate și IoT", "faculty": "CT", "students": 92, "year": 3, "semester": "Semestrul 2", "credits": 5, "instructor": "Conf. Dr. Răzvan Bogdan"}'>
+              <td><strong>Sisteme Încorporate și IoT</strong></td>
+              <td><span class="badge badge-ct">CT</span></td>
+              <td>92</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Artificial Intelligence and Machine Learning", "faculty": "CT", "students": 105, "year": 4, "semester": "Semestrul 1", "credits": 6, "instructor": "Prof. Dr. Cătălin Căleanu"}'>
+              <td><strong>Artificial Intelligence and Machine Learning</strong></td>
+              <td><span class="badge badge-ct">CT</span></td>
+              <td>105</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Circuite Electrice și Măsurări", "faculty": "EE", "students": 75, "year": 1, "semester": "Semestrul 2", "credits": 5, "instructor": "Prof. Dr. Dumitru Toader"}'>
+              <td><strong>Circuite Electrice și Măsurări</strong></td>
+              <td><span class="badge badge-ee">EE</span></td>
+              <td>75</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Electric Machines and Drives", "faculty": "EE", "students": 70, "year": 2, "semester": "Semestrul 1", "credits": 6, "instructor": "Prof. Dr. Sorin Deaconu"}'>
+              <td><strong>Electric Machines and Drives</strong></td>
+              <td><span class="badge badge-ee">EE</span></td>
+              <td>70</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Surse Regenerabile de Energie", "faculty": "EE", "students": 68, "year": 3, "semester": "Semestrul 2", "credits": 5, "instructor": "Conf. Dr. Flaviu Frigura"}'>
+              <td><strong>Surse Regenerabile de Energie</strong></td>
+              <td><span class="badge badge-ee">EE</span></td>
+              <td>68</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Power Electronics", "faculty": "EE", "students": 64, "year": 3, "semester": "Semestrul 1", "credits": 5, "instructor": "Prof. Dr. Nicolae Muntean"}'>
+              <td><strong>Power Electronics</strong></td>
+              <td><span class="badge badge-ee">EE</span></td>
+              <td>64</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Proiectare și Teoria Arhitecturii", "faculty": "ARH", "students": 50, "year": 1, "semester": "Semestrul 1", "credits": 7, "instructor": "Prof. Dr. Vlad Gaivoronschi"}'>
+              <td><strong>Proiectare și Teoria Arhitecturii</strong></td>
+              <td><span class="badge badge-arh">ARH</span></td>
+              <td>50</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Urban Planning and Land Use", "faculty": "ARH", "students": 48, "year": 3, "semester": "Semestrul 1", "credits": 6, "instructor": "Conf. Dr. Radu Radoslav"}'>
+              <td><strong>Urban Planning and Land Use</strong></td>
+              <td><span class="badge badge-arh">ARH</span></td>
+              <td>48</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Restaurarea și Conservarea Monumentelor", "faculty": "ARH", "students": 42, "year": 4, "semester": "Semestrul 2", "credits": 6, "instructor": "Prof. Dr. Teodor Gheorghiu"}'>
+              <td><strong>Restaurarea și Conservarea Monumentelor</strong></td>
+              <td><span class="badge badge-arh">ARH</span></td>
+              <td>42</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Organic Chemistry and Synthesis", "faculty": "CHEM", "students": 72, "year": 2, "semester": "Semestrul 1", "credits": 6, "instructor": "Prof. Dr. Vasile Pode"}'>
+              <td><strong>Organic Chemistry and Synthesis</strong></td>
+              <td><span class="badge badge-chem">CHEM</span></td>
+              <td>72</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Ingineria Reacțiilor Chimice", "faculty": "CHEM", "students": 65, "year": 3, "semester": "Semestrul 1", "credits": 5, "instructor": "Conf. Dr. Cornelia Păcurariu"}'>
+              <td><strong>Ingineria Reacțiilor Chimice</strong></td>
+              <td><span class="badge badge-chem">CHEM</span></td>
+              <td>65</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+            <tr data-course='{"name": "Biotechnologies and Environmental Protection", "faculty": "CHEM", "students": 58, "year": 3, "semester": "Semestrul 2", "credits": 5, "instructor": "Prof. Dr. Rodica Pode"}'>
+              <td><strong>Biotechnologies and Environmental Protection</strong></td>
+              <td><span class="badge badge-chem">CHEM</span></td>
+              <td>58</td>
+              <td style="text-align: right;">
+                <button class="btn btn-secondary btn-sm" onclick="showCourseDetails(this)">Details</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Course Details Modal -->
+  <div class="modal-backdrop" id="courseDetailsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalCourseName">Course Details</h3>
+        <button type="button" class="modal-close" onclick="closeModal('courseDetailsModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="details-list">
+          <div class="detail-item full-width">
+            <div class="detail-label">Course Title</div>
+            <div class="detail-value" id="detailCourseTitle">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Faculty</div>
+            <div class="detail-value" id="detailCourseFaculty">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Academic Year</div>
+            <div class="detail-value" id="detailAcademicYear">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Semester</div>
+            <div class="detail-value" id="detailSemester">-</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Credits</div>
+            <div class="detail-value" id="detailCredits">-</div>
+          </div>
+          <div class="detail-item full-width">
+            <div class="detail-label">Lead Instructor</div>
+            <div class="detail-value" id="detailInstructor">-</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('courseDetailsModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal-backdrop" id="loginModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Teacher Login</h3>
+        <button type="button" class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+      </div>
+      <form onsubmit="handleLogin(event)">
+        <div class="modal-body">
+          <div id="loginError" class="error-message"></div>
+          <div class="form-group">
+            <label class="form-label" for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" class="form-control" placeholder="e.g. 'teacher'" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" class="form-control" placeholder="e.g. 'password'" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('loginModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 SVV Team</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initTableSearch('courseSearch', 'coursesTableBody', 0);
+    });
+
+    function showCourseDetails(button) {
+      const row = button.closest('tr');
+      const dataStr = row.getAttribute('data-course');
+      if (!dataStr) return;
+      const data = JSON.parse(dataStr);
+
+      document.getElementById('modalCourseName').textContent = data.name;
+      document.getElementById('detailCourseTitle').textContent = data.name;
+      document.getElementById('detailCourseFaculty').textContent = data.faculty;
+      document.getElementById('detailAcademicYear').textContent = 'Anul ' + data.year;
+      document.getElementById('detailSemester').textContent = data.semester;
+      document.getElementById('detailCredits').textContent = data.credits + ' ECTS';
+      document.getElementById('detailInstructor').textContent = data.instructor;
+
+      openModal('courseDetailsModal');
+    }
+  </script>
+</body>
+</html>
